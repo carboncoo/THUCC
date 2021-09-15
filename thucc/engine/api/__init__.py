@@ -4,3 +4,6 @@ from .microwrite import (
     solve_wholebookreading_with_microwrite,
     solve_poem_shortanswer_with_microwrite
 )
+from .wsd import (
+    solve_wsd
+)
