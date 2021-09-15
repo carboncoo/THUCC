@@ -8,6 +8,31 @@ import Levenshtein
 import requests
 import xml.etree.ElementTree as ET
 
+def translate(srcList):
+    """
+    Inputs: 
+        srcList: [
+            "使吴越，致命讫即还",
+            "吾终拒之，是近名也",
+            "邀煜入宫治装",
+            "上觉，遽诘所以",
+            "煜之君臣，卒赖保全。"
+        ]
+    
+    Outputs:
+        tgtList: [
+            "出使吴越，到使命完成就立即还朝",
+            "我将拒之，名称是近代",
+            "李煜入宫邀请刻意整束行装",
+            "皇上发现了，立即问什么原因",
+            "李煜的君臣，终于依靠保全。"
+        ]
+    """
+    url = "http://127.0.0.1:36789/translate/"
+    ret = requests.post(url, json=srcList)
+    tgtList = json.loads(ret.text)
+    return tgtList
+
 def pure(s):
 	s = s.replace('\t','')
 	s = s.replace('\n','')
@@ -71,32 +96,6 @@ def solve_tselect(question):
         'explain': explain
     }
     return outputs
-    
-    
-def translate(srcList):
-    """
-    Inputs: 
-        srcList: [
-            "使吴越，致命讫即还",
-            "吾终拒之，是近名也",
-            "邀煜入宫治装",
-            "上觉，遽诘所以",
-            "煜之君臣，卒赖保全。"
-        ]
-    
-    Outputs:
-        srcList: [
-            "出使吴越，到使命完成就立即还朝",
-            "我将拒之，名称是近代",
-            "李煜入宫邀请刻意整束行装",
-            "皇上发现了，立即问什么原因",
-            "李煜的君臣，终于依靠保全。"
-        ]
-    """
-    url = "http://127.0.0.1:36789/translate/"
-    ret = requests.post(url, json=srcList)
-    tgtList = json.loads(ret.text)
-    return tgtList
 
 if __name__ == '__main__':
     qs = json.loads(codecs.open(sys.argv[1], 'r', 'utf-8').read())
