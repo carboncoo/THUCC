@@ -57,6 +57,20 @@ class Question(object):
     @property
     def options(self):
         return self._options
+
+    @staticmethod
+    def get_text(elem):
+        if type(elem) in [Question, Questions, Section]:
+            elem = elem.node
+        texts = []
+
+        if elem.text is not None:
+            texts.append(elem.text)
+
+        for e in elem:
+            texts.append(get_text(e))
+
+        return "\n".join(texts)
         
 
 class Questions(object):

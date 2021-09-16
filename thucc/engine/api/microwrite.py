@@ -60,7 +60,26 @@ def solve_poem_shortanswer_with_microwrite(question):
     return outputs
 
 def solve_cc_shortanswer_with_microwrite(question):
-    pass
+    context = pure(question.questions.node.find("text").text)
+    qstem = pure(question.text)
+    prompts = [
+        f"{context}@@{qstem}@@"
+    ]
+    res = microwrite(prompts)
+    outputs = {
+        'ans': res[0]
+    }
+    return outputs
 
 def solve_analects_with_microwrite(question):
-    pass
+    context = pure(question.get_text(question.questions.node.find("text")))
+    qstem = pure(question.text)
+    prompts = [
+        f"{context}@@{qstem}@@"
+    ]
+    res = microwrite(prompts)
+    outputs = {
+        'ans': res[0]
+    }
+    return outputs
+
