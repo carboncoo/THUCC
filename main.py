@@ -5,7 +5,8 @@ from thucc.engine.api import (
     solve_tselect,
     solve_microwrite,
     solve_wholebookreading_with_microwrite,
-    solve_poem_shortanswer_with_microwrite
+    solve_poem_shortanswer_with_microwrite,
+    solve_dictation
 )
 
 question_types = ['wsd',                # 题型：词义消歧 (6, 7)
@@ -25,9 +26,8 @@ question_types = ['wsd',                # 题型：词义消歧 (6, 7)
 
 def main():
     tq_mapping = parse("/data1/private/cc/THUCC/I.xml")
-    for q in tq_mapping['wsd']:
-        outputs = solve_wsd(q)
-        print(outputs)
+    # for q in tq_mapping['wsd']:
+    #     outputs = solve_wsd(q)
     # for q in tq_mapping['translate']:
     #     outputs = solve_translate(q)
     # for q in tq_mapping['cc_tselect']:
@@ -38,6 +38,9 @@ def main():
     #     outputs = solve_wholebookreading_with_microwrite(q)
     # for q in tq_mapping['poem_shortanswer']:
     #     outputs = solve_poem_shortanswer_with_microwrite(q)
+    for q in tq_mapping['dictation']:
+        outputs = solve_dictation(q)
+        print(outputs)
 
 if __name__ == '__main__':
     main()

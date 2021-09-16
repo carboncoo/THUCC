@@ -7,3 +7,4 @@ from .microwrite import (
 from .wsd import (
     solve_wsd
 )
+from .poem_retrieval import solve_dictation
