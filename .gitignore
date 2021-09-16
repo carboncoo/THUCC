@@ -4,7 +4,10 @@ __pycache__/
 *.xml
 *tmp/
 
+*.tar.gz
+
 thucc/systems/*/*
 
 !Dockerfile
 !README.md
+!test.py

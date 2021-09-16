@@ -70,8 +70,8 @@ def solve_wsd(question):
             pos = sent.index('**(point,0,Null)**')
             sent = clearmark(sent).strip()
             test_insts.append([sent, pos, sense])
-        # baihuas = translate([test_inst[0] for test_inst in test_insts])
-        baihuas = ['，龚遂接受了，登记清楚后拿回来', '太祖掌管禁卫亲军', '副帅潘美预先祝贺他', '又赐给他白金万两']
+        baihuas = translate([test_inst[0] for test_inst in test_insts])
+        # baihuas = ['，龚遂接受了，登记清楚后拿回来', '太祖掌管禁卫亲军', '副帅潘美预先祝贺他', '又赐给他白金万两']
     elif qtype == 'sentence_pair':
         test_insts = []
         for option in options:
@@ -79,8 +79,8 @@ def solve_wsd(question):
             pos_a, pos_b = sent_a.index('**(point,0,Null)**'), sent_b.index('**(point,0,Null)**')
             sent_a, sent_b = clearmark(sent_a).strip(), clearmark(sent_b).strip()
             test_insts += [[sent_a, pos_a], [sent_b, pos_b]]
-        # baihuas = translate([test_inst[0] for test_inst in test_insts])
-        baihuas = ['把许多玩具放在席子上', '吴越人用小船追来送他', '看他拿什么东西', '一无所受', '你为什么会疏远我', '我有什么功劳呢', '唐彬的统帅军队的', '上前去，哭的很悲痛']
+        baihuas = translate([test_inst[0] for test_inst in test_insts])
+        # baihuas = ['把许多玩具放在席子上', '吴越人用小船追来送他', '看他拿什么东西', '一无所受', '你为什么会疏远我', '我有什么功劳呢', '唐彬的统帅军队的', '上前去，哭的很悲痛']
     elif qtype == 'compare':
         test_insts = []
         for option in options:
