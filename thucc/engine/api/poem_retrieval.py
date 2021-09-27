@@ -2,6 +2,8 @@ import re
 import json
 import requests
 
+from thucc.engine.utils import log_solve
+
 def poem_retrieval(blank):
     """
     Inputs: 
@@ -20,6 +22,7 @@ def pure(s):
     s = s.replace('\r','')
     return s
 
+@log_solve('poem_retrieval')
 def solve_dictation(question):
     text = question.node.find("blank").text
     text = pure(text)

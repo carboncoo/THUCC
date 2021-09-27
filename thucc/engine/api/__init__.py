@@ -10,3 +10,9 @@ from .wsd import (
     solve_wsd
 )
 from .poem_retrieval import solve_dictation
+
+from .translate import translate as api_translate
+from .microwrite import microwrite as api_microwrite
+from .wsd import wsd_translate_align as api_wsd_translate_align
+from .wsd import get_sense as api_get_sense
+from .poem_retrieval import poem_retrieval as api_poem_retrieval

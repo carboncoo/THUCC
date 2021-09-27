@@ -8,6 +8,8 @@ import Levenshtein
 import requests
 import xml.etree.ElementTree as ET
 
+from thucc.engine.utils import log_solve
+
 def translate(srcList):
     """
     Inputs: 
@@ -28,9 +30,15 @@ def translate(srcList):
             "李煜的君臣，终于依靠保全。"
         ]
     """
+    single_flag = False
+    if not isinstance(srcList, list):
+        srcList = [srcList]
+        single_flag = True
     url = "http://127.0.0.1:36789/translate/"
     ret = requests.post(url, json=srcList)
     tgtList = json.loads(ret.text)
+    if single_flag:
+        tgtList = tgtList[0]
     return tgtList
 
 def pure(s):
@@ -40,6 +48,7 @@ def pure(s):
 	s = s.replace('\r','')
 	return s
 
+@log_solve('translate')
 def solve_translate(question):
     q_str = question.to_string()
     if re.search(q_str, "解释.*(字面意思|含义)") is not None:
@@ -54,6 +63,7 @@ def solve_translate(question):
     }
     return outputs
 
+@log_solve('translate')
 def solve_tselect(question):
     srcList = []
     tgtList = []

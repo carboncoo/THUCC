@@ -295,8 +295,8 @@ def determine_question_type(section_type, q):
         return None
 
 def parse(filename):
-    et = ET.parse(filename)
-    section_list = et.findall("section")
+    root = ET.parse(filename)
+    section_list = root.findall("section")
     s_dict = {}
 
     for s in section_list:
@@ -328,10 +328,10 @@ def parse(filename):
     for k in mapping:
         print(f'Question Type: [{k}]')
         for q in mapping[k]:
-            print(q.qid)
+            print(q.qid, q.text)
         print()
 
-    return mapping
+    return root, mapping
 
 
 if __name__ == '__main__':

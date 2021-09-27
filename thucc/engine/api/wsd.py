@@ -3,6 +3,7 @@ import json
 import requests
 
 from .translate import translate
+from thucc.engine.utils import log_solve
 
 def wsd_translate_align(test_insts, ask_correct, baihuas, qtype):
     url = "http://127.0.0.1:36792/wsd_translate_align"
@@ -15,7 +16,26 @@ def wsd_translate_align(test_insts, ask_correct, baihuas, qtype):
     ret = requests.post(url, json=data)
     res = json.loads(ret.text)
     return res
-    
+
+def get_sense(wenyan, index, baihua=None):
+    url = "http://127.0.0.1:36792/get_sense"
+    if not baihua:
+        baihua = translate(wenyan)
+    wenyan = ' '.join(wenyan.replace(' ', ''))
+    data = {
+        'baihua': baihua,
+        'wenyan': wenyan,
+        'index': index
+    }
+    ret = requests.post(url, json=data)
+    res = json.loads(ret.text)
+    # return res
+    return {
+        'wenyan': wenyan,
+        'index': index,
+        'baihua': baihua,
+        'res': res
+    }
 
 def determine_qtype(headtext, text, example_option):
     # sentence_pair_keywords = ['组句', '组语句', '组词语', '下列句子', '下列各句', '下列语句']
@@ -49,7 +69,7 @@ def clearmark(sent):
     # clear marks to get raw text
     return sent.replace('**(point,0,Null)**', '').replace('**(point,1,Null)**', '')
 
-
+@log_solve('wsd')
 def solve_wsd(question):
     options = question.options
     values = [option[0] for option in options]
