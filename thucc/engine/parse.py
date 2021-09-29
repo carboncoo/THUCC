@@ -71,6 +71,15 @@ class Question(object):
             texts.append(get_text(e))
 
         return "\n".join(texts)
+
+    @property
+    def answer(self):
+        answer_node = self._node.find('answer')
+        if answer_node is not None:
+            ans = answer_node.text
+        else:
+            ans = ''
+        return ans
         
 
 class Questions(object):
@@ -294,7 +303,7 @@ def determine_question_type(section_type, q):
     else:
         return None
 
-def parse(filename):
+def parse(filename, verbose=False):
     root = ET.parse(filename)
     section_list = root.findall("section")
     s_dict = {}
@@ -325,11 +334,12 @@ def parse(filename):
         if qtype:
             mapping[qtype].append(question)
 
-    for k in mapping:
-        print(f'Question Type: [{k}]')
-        for q in mapping[k]:
-            print(q.qid, q.text)
-        print()
+    if verbose:
+        for k in mapping:
+            print(f'Question Type: [{k}]')
+            for q in mapping[k]:
+                print(q.qid, q.text)
+            print()
 
     return root, mapping
 
