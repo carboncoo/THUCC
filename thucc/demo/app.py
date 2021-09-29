@@ -6,7 +6,7 @@ from PIL import  Image
 # Custom imports 
 from multipage import MultiPage
 from pages import (
-    poem_retrieval,
+    dictation,
     mircrowrite,
     wsd
 )
@@ -17,11 +17,13 @@ app = MultiPage()
 # Title of the main page
 logo = open('logo.b64').read()
 
+st.set_page_config(page_title='THUCC Demo', page_icon = logo, layout='centered', initial_sidebar_state = 'auto')
+
 _, headbar = st.columns([6, 6])
 headbar.markdown(f'#### THUCC: 清华大学文言文自动处理软件包 <img src="{logo}" width=40 />', unsafe_allow_html=True)
 
 # Add all your application here
-app.add_page("诗文检索", poem_retrieval.app)
+app.add_page("古诗文默写", dictation.app)
 app.add_page("微写作", mircrowrite.app)
 app.add_page("词义消歧", wsd.app)
 # app.add_page("文言翻译", translate.app)

@@ -26,22 +26,22 @@ def app():
         
         st.write(display_general)
 
-    st.write("----------------")
+    # st.write("----------------")
 
-    with st.container():
-        # 整本书阅读
-        init_inputs_wbr = "鲁迅先生评价《红楼梦》时谈到“至于说到《红楼梦》的价值，可是在中国底小说中实在是不可多得的。其要点在敢于如实描写，并无讳饰，和前的小说叙好人完全是好，坏人完全是坏的，大不相同，所以其中所叙的人物，都是真的人物。总之自有《红楼梦》出来以后，传统的思想和写法都打破了。”《红楼梦》塑造人物注重表现人物性格的复杂性及其发展变化，请从贾宝玉、林黛玉、薛宝钗、王熙凤中任选一个人物结合鲁迅先生的评价和作品内容简要阐明你对他（她）的理解。"
-        init_outputs_wbr = ""
+    # with st.container():
+    #     # 整本书阅读
+    #     init_inputs_wbr = "鲁迅先生评价《红楼梦》时谈到“至于说到《红楼梦》的价值，可是在中国底小说中实在是不可多得的。其要点在敢于如实描写，并无讳饰，和前的小说叙好人完全是好，坏人完全是坏的，大不相同，所以其中所叙的人物，都是真的人物。总之自有《红楼梦》出来以后，传统的思想和写法都打破了。”《红楼梦》塑造人物注重表现人物性格的复杂性及其发展变化，请从贾宝玉、林黛玉、薛宝钗、王熙凤中任选一个人物结合鲁迅先生的评价和作品内容简要阐明你对他（她）的理解。"
+    #     init_outputs_wbr = ""
 
-        st.write("## 整本书阅读")
-        st.write("### 系统输入")
-        inputs_wbr = st.text_area("", init_inputs_wbr, height=200)
-        display_wbr = init_outputs_wbr
-        if st.button('提交', key='wbr'):
-            display_wbr = inputs_wbr + api_microwrite(prompt_wbr(inputs_wbr))
-            if not display_wbr:
-                display_wbr = '出现故障'
+    #     st.write("## 整本书阅读")
+    #     st.write("### 系统输入")
+    #     inputs_wbr = st.text_area("", init_inputs_wbr, height=200)
+    #     display_wbr = init_outputs_wbr
+    #     if st.button('提交', key='wbr'):
+    #         display_wbr = inputs_wbr + api_microwrite(prompt_wbr(inputs_wbr))
+    #         if not display_wbr:
+    #             display_wbr = '出现故障'
 
-        st.write("### 系统输出")
+    #     st.write("### 系统输出")
         
-        st.write(display_wbr)
+    #     st.write(display_wbr)

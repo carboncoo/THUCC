@@ -1,3 +1,4 @@
+import time
 import argparse
 
 from thucc.engine.parse import parse
@@ -39,7 +40,6 @@ def parse_args():
         "-o",
         "--output",
         type=str,
-        default="tests/outputs/res.xml",
         help="path to the output xml answer file",
     )
     parser.add_argument(
@@ -50,39 +50,37 @@ def parse_args():
     return parser.parse_args()
 
 def main(args):
-    # output_file = '/data1/private/cc/THUCC/tests/outputs/I_out.xml'
-    # root, tq_mapping = parse("/data1/private/cc/THUCC/tests/inputs/I.xml")
     root, tq_mapping = parse(args.input)
-    output_file = args.output
     
     print("========= THUCC Start ========\n")
 
-    for q in tq_mapping['wsd']:
-        outputs = solve_wsd(q)
+    # for q in tq_mapping['wsd']:
+    #     outputs = solve_wsd(q)
 
-    for q in tq_mapping['translate']:
-        outputs = solve_translate(q)
-    for q in tq_mapping['cc_tselect']:
-        outputs = solve_tselect(q)
+    # for q in tq_mapping['translate']:
+    #     outputs = solve_translate(q)
+    # for q in tq_mapping['cc_tselect']:
+    #     outputs = solve_tselect(q)
 
-    for q in tq_mapping['microwrite']:
-        outputs = solve_microwrite(q)
-    for q in tq_mapping['whole_book_reading']:
-        outputs = solve_wholebookreading_with_microwrite(q)
-    for q in tq_mapping['poem_shortanswer']:
-        outputs = solve_poem_shortanswer_with_microwrite(q)
-    for q in tq_mapping['cc_shortanswer']:
-        outputs = solve_cc_shortanswer_with_microwrite(q)
-    for q in tq_mapping['analects']:
-        outputs = solve_analects_with_microwrite(q)
+    # for q in tq_mapping['microwrite']:
+    #     outputs = solve_microwrite(q)
+    # for q in tq_mapping['whole_book_reading']:
+    #     outputs = solve_wholebookreading_with_microwrite(q)
+    # for q in tq_mapping['poem_shortanswer']:
+    #     outputs = solve_poem_shortanswer_with_microwrite(q)
+    # for q in tq_mapping['cc_shortanswer']:
+    #     outputs = solve_cc_shortanswer_with_microwrite(q)
+    # for q in tq_mapping['analects']:
+    #     outputs = solve_analects_with_microwrite(q)
     for q in tq_mapping['dictation']:
         outputs = solve_dictation(q)
     
     # save answers to the output xml file
-    root.write(output_file, xml_declaration=True, encoding="UTF-8")
+    if args.output:
+        root.write(args.output, xml_declaration=True, encoding="UTF-8")
 
     # save answers in more readable format
-    if args.simple:
+    if args.output and args.simple:
         all_answers = ""
         for k, questions in tq_mapping.items():
             for q in questions:
@@ -90,8 +88,11 @@ def main(args):
                 all_answers += f"Answer:\t{q.answer}\n\n"
         print("========= THUCC Results ========\n")
         print(all_answers)
-        with open(output_file.replace('.xml', '.txt'), 'w') as fout:
+        with open(args.output.replace('.xml', '.txt'), 'w') as fout:
             fout.write(all_answers)
     
 if __name__ == '__main__':
+    start = time.time()
     main(parse_args())
+    end = time.time()
+    print(f'Total time: {end-start}s')
