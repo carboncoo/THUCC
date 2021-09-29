@@ -47,8 +47,13 @@ def main():
     #     outputs = solve_cc_shortanswer_with_microwrite(q)
     # for q in tq_mapping['analects']:
     #     outputs = solve_analects_with_microwrite(q)
+    for q in tq_mapping['dictation']:
+        outputs = solve_dictation(q)
     
-    # root.write(output_file, xml_declaration=True, encoding="UTF-8")
+    # save ans to the output xml file
+    root.write(output_file, xml_declaration=True, encoding="UTF-8")
+
+    # 
     
 
 if __name__ == '__main__':

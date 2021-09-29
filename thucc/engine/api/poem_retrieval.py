@@ -15,6 +15,17 @@ def poem_retrieval(blank):
     ret = requests.post(url, json={'blank': blank})
     return json.loads(ret.text)
 
+def dictation(blank):
+    """
+    Inputs: 
+        blank: ["毕业典礼上，校长引用《游褒禅山记》中的“________，________”两句，勉励学生在成长路上竭诚尽志，努力拼搏，做到无怨无悔。 $$"]
+    Outputs:
+        ans: ["而世之奇伟、瑰怪、非常之观 常在于险远"]
+    """
+    url = "http://127.0.0.1:36794/dictation"
+    ret = requests.post(url, json={'prompts': blank})
+    return json.loads(ret.text)
+
 def pure(s):
     s = s.replace('\t','')
     s = s.replace('\n','')
@@ -22,12 +33,27 @@ def pure(s):
     s = s.replace('\r','')
     return s
 
-@log_solve('poem_retrieval')
-def solve_dictation(question):
+def solve_dictation_with_dictation(question):
+    text = question.node.find("blank").text
+    text = pure(text)
+    res = dictation([text])[0]
+    outputs = {
+        'ans': res
+    }
+    return outputs
+
+def solve_dictation_with_retrieval(question):
     text = question.node.find("blank").text
     text = pure(text)
     res = poem_retrieval(text)
     outputs = {
         'ans': res
     }
+    return outputs
+
+@log_solve('joint<poem_retrieval, dictation>')
+def solve_dictation(question):
+    outputs = solve_dictation_with_retrieval(question)
+    if outputs['ans'] == '':
+        outputs = solve_dictation_with_dictation(question)
     return outputs
