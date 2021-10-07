@@ -59,7 +59,8 @@ def solve_wholebookreading_with_microwrite(question):
 @log_solve('microwrite')
 def solve_poem_shortanswer_with_microwrite(question):
     context = question.questions.node.find("text").text
-    title, writer, poem = context.strip().replace('\t', ' ').split()
+    contexts = context.strip().replace('\t', ' ').replace('\n', ' ').split()
+    title, writer, poem = contexts[0], contexts[1], ''.join(contexts[2:])
     title, writer, poem = pure(title), pure(writer), pure(poem)
     qstem = pure(question.text)
     prompts = [

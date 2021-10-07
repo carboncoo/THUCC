@@ -3,6 +3,7 @@ import argparse
 
 from thucc.engine.parse import parse
 from thucc.engine.api import (
+    empty_solve,
     solve_wsd,
     solve_translate,
     solve_tselect,
@@ -14,20 +15,20 @@ from thucc.engine.api import (
     solve_dictation
 )
 
-question_types = ['wsd',                # 题型：词义消歧 (6, 7)
-                  'cc_tselect',         # 题型：翻译选择 (8)
-                  'cc_uselect',         # 题型：文言文理解性选择 (9)
-                  'translate',          # 题型：翻译 (10)
-                  'cc_shortanswer',     # 题型：文言文简答（11）
-                  'analects',           # 题型：论语（12）
-                  
-                  'poem_uselect',       # 题型：诗歌理解性选择 (13, 14)
-                  'poem_shortanswer',   # 题型：诗歌简答 (15)
-                  'dictation',          # 题型：默写 (16)
-                  'whole_book_reading', # 题型：整本书阅读（17）
-                  
-                  'microwrite'          # 题型：微写作（23）
-                  ]
+question_api_mapping = {'wsd': solve_wsd,                                             # 题型：词义消歧 (6, 7)
+                        'cc_tselect': solve_tselect,                                  # 题型：翻译选择 (8)
+                        'cc_uselect': empty_solve,                                    # 题型：文言文理解性选择 (9)
+                        'translate': solve_translate,                                 # 题型：翻译 (10)
+                        'cc_shortanswer': solve_cc_shortanswer_with_microwrite,       # 题型：文言文简答（11）
+                        'analects': solve_analects_with_microwrite,                   # 题型：论语（12）
+                        
+                        'poem_uselect': empty_solve,                                  # 题型：诗歌理解性选择 (13, 14)
+                        'poem_shortanswer': solve_poem_shortanswer_with_microwrite,   # 题型：诗歌简答 (15)
+                        'dictation': solve_dictation,                                 # 题型：默写 (16)
+                        'whole_book_reading': solve_wholebookreading_with_microwrite, # 题型：整本书阅读（17）
+                        
+                        'microwrite': solve_microwrite                                # 题型：微写作（23）
+                        }
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -43,6 +44,13 @@ def parse_args():
         help="path to the output xml answer file",
     )
     parser.add_argument(
+        "-q",
+        "--qtypes",
+        nargs='*',
+        choices=question_api_mapping.keys(),
+        help="only answer these types of questions",
+    )
+    parser.add_argument(
         "--simple",
         action="store_true",
         help="save answers in a more readable format",
@@ -54,26 +62,11 @@ def main(args):
     
     print("========= THUCC Start ========\n")
 
-    # for q in tq_mapping['wsd']:
-    #     outputs = solve_wsd(q)
+    qtypes = args.qtypes or question_api_mapping.keys()
 
-    # for q in tq_mapping['translate']:
-    #     outputs = solve_translate(q)
-    # for q in tq_mapping['cc_tselect']:
-    #     outputs = solve_tselect(q)
-
-    # for q in tq_mapping['microwrite']:
-    #     outputs = solve_microwrite(q)
-    # for q in tq_mapping['whole_book_reading']:
-    #     outputs = solve_wholebookreading_with_microwrite(q)
-    # for q in tq_mapping['poem_shortanswer']:
-    #     outputs = solve_poem_shortanswer_with_microwrite(q)
-    # for q in tq_mapping['cc_shortanswer']:
-    #     outputs = solve_cc_shortanswer_with_microwrite(q)
-    # for q in tq_mapping['analects']:
-    #     outputs = solve_analects_with_microwrite(q)
-    for q in tq_mapping['dictation']:
-        outputs = solve_dictation(q)
+    for qtype in qtypes:
+        for q in tq_mapping[qtype]:
+            output = question_api_mapping[qtype](q)
     
     # save answers to the output xml file
     if args.output:

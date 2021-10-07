@@ -16,3 +16,6 @@ from .microwrite import microwrite as api_microwrite
 from .wsd import wsd_translate_align as api_wsd_translate_align
 from .wsd import get_sense as api_get_sense
 from .poem_retrieval import api_dictation
+
+def empty_solve(*args, **kwargs):
+    return None
