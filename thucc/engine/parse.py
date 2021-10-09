@@ -80,6 +80,15 @@ class Question(object):
         else:
             ans = ''
         return ans
+
+    @property
+    def explain(self):
+        explain_node = self._node.find('explain')
+        if explain_node is not None:
+            exp = explain_node.text
+        else:
+            exp = ''
+        return exp
         
 
 class Questions(object):

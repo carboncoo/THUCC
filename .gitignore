@@ -12,3 +12,5 @@ tests/
 !Dockerfile
 !README.md
 !test.py
+
+*.DS_Store

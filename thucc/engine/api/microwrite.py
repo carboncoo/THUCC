@@ -17,6 +17,7 @@ def microwrite(prompts):
             "“君子坦荡荡”“淡泊名利”是..."
         ]
     """
+    print(prompts)
     single_flag = False
     if not isinstance(prompts, list):
         prompts = [prompts]
@@ -29,18 +30,30 @@ def microwrite(prompts):
     return res
 
 not_chinese_pattern = u"[^\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\u4e00-\u9fa5]"
+label_pattern = "\*\*.*?\*\*(.*?)\*\*.*?\*\*" # **(label,0,23_1)**
+ord_pattern = u"([\u2460-\u2473])" # ① - ⑳
 
-def pure(s):
+def pure(s, only_chinese=True):
     s = s.replace('\t','')
     s = s.replace('\n','')
     s = s.replace(' ','')
     s = s.replace('\r','')
-    s = re.sub(not_chinese_pattern, "", s)
+    if only_chinese:
+        s = re.sub(not_chinese_pattern, "", s)
     return s
 
 @log_solve('microwrite')
 def solve_microwrite(question):
-    prompts = [pure(question.text) + "@@"]
+    context = pure(question.text)
+    # context = pure(question.text, only_chinese=False)
+    # cnt = 0
+    # replace special tokens
+    # while re.search(label_pattern, context):
+    #     cnt += 1 
+    #     context = re.sub(label_pattern, f'（{cnt}）\\1', context, 1)
+    # context = re.sub(ord_pattern, lambda x: "（{}）".format(ord(x.group(0))-9311), context)
+
+    prompts = [context + "@@"]
     res = microwrite(prompts)
     outputs = {
         'ans': res[0]

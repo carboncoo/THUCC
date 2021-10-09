@@ -55,6 +55,11 @@ def parse_args():
         action="store_true",
         help="save answers in a more readable format",
     )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="enable debugging mode: no files will be saved",
+    )
     return parser.parse_args()
 
 def main(args):
@@ -68,6 +73,9 @@ def main(args):
         for q in tq_mapping[qtype]:
             output = question_api_mapping[qtype](q)
     
+    if args.debug:
+        import ipdb; ipdb.set_trace()
+        exit(0)
     # save answers to the output xml file
     if args.output:
         root.write(args.output, xml_declaration=True, encoding="UTF-8")
@@ -79,6 +87,8 @@ def main(args):
             for q in questions:
                 all_answers += f"Question:\t{q.qid} [{k}]\n"
                 all_answers += f"Answer:\t{q.answer}\n\n"
+                if q.explain:
+                    all_answers += f"Explain:\t{q.explain}\n\n"
         print("========= THUCC Results ========\n")
         print(all_answers)
         with open(args.output.replace('.xml', '.txt'), 'w') as fout:
