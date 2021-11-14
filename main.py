@@ -60,6 +60,17 @@ def parse_args():
         action="store_true",
         help="enable debugging mode: no files will be saved",
     )
+    parser.add_argument(
+        "--no_exp",
+        action="store_true",
+        help="don't output explainations",
+    )
+    parser.add_argument(
+        "--stage",
+        type=str,
+        choices=['first, second'],
+        help="development stage",
+    )
     return parser.parse_args()
 
 def main(args):

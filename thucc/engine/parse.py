@@ -276,8 +276,11 @@ def determine_question_type(section_type, q):
                                        "加点|划线", "词"]):
                 return 'wsd' # 题型：词义消歧 (6, 7)
             
+            elif match_text_and(q, ["字", "解释"]):
+                return 'wsd' # 题型：词义消歧 (6, 7)
+            
             elif match_text_and(q.node.find("text").text,
-                              ["句", "解释|理解|译", "词"],
+                              ["句", "解释|理解|译", "词|字"],
                               [False, False, True]):
                 return 'cc_tselect' # 题型：翻译选择 (8)
             
