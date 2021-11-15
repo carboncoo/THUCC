@@ -64,3 +64,7 @@ def solve_dictation(question):
     if outputs['ans'] == '':
         outputs = solve_dictation_with_dictation(question)
     return outputs
+
+@log_solve('poem_retrieval')
+def solve_dictation_v1(question):
+    return solve_dictation_with_retrieval(question)

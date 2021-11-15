@@ -44,7 +44,9 @@ def pure(s, only_chinese=True):
 
 @log_solve('microwrite')
 def solve_microwrite(question):
-    context = pure(question.text)
+    # context = pure(question.text)
+    # prompts = [context + "@@"]
+    
     # context = pure(question.text, only_chinese=False)
     # cnt = 0
     # replace special tokens
@@ -53,10 +55,11 @@ def solve_microwrite(question):
     #     context = re.sub(label_pattern, f'（{cnt}）\\1', context, 1)
     # context = re.sub(ord_pattern, lambda x: "（{}）".format(ord(x.group(0))-9311), context)
 
-    prompts = [context + "@@"]
+    contexts = re.findall(label_pattern, question.text)
+    prompts = [context + "@@" for context in contexts]
     res = microwrite(prompts)
     outputs = {
-        'ans': res[0]
+        'ans': res
     }
     return outputs
 

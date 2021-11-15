@@ -9,7 +9,11 @@ from .microwrite import (
 from .wsd import (
     solve_wsd
 )
-from .poem_retrieval import solve_dictation
+from .poem_retrieval import (
+    solve_dictation,
+    solve_dictation_v1
+)
+from .poem_appreciation import solve_poem_shortanswer_with_appreciation
 
 from .translate import translate as api_translate
 from .microwrite import microwrite as api_microwrite
@@ -17,5 +21,13 @@ from .wsd import wsd_translate_align as api_wsd_translate_align
 from .wsd import get_sense as api_get_sense
 from .poem_retrieval import api_dictation
 
-def empty_solve(*args, **kwargs):
-    return None
+from thucc.engine.utils import log_solve
+
+def empty_solve(default_answer=''):
+    @log_solve('empty')
+    def solve_func(*args, **kwargs):
+        outputs = {
+            'ans': default_answer
+        }
+        return outputs
+    return solve_func

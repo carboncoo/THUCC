@@ -304,7 +304,7 @@ def determine_question_type(section_type, q):
             return 'dictation' # 题型：默写 (16)
         
         else: # shortanswer
-            if q.questions.qid == 'questions_07':
+            if q.questions.node.find('text') is None:
                 return 'whole_book_reading' # 整本书阅读（17）
             else:
                 return 'poem_shortanswer' # 题型：诗歌简答 (15)
