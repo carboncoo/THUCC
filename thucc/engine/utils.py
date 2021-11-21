@@ -1,3 +1,4 @@
+import json
 import time
 import xml.etree.ElementTree as ET
 
@@ -9,7 +10,7 @@ def answer_question(question, outputs):
 
     if 'explain' in outputs:
         explain_elm = ET.Element('explain', attrib={'org': 'THU'})
-        explain_elm.text = outputs['explain']
+        explain_elm.text = json.dumps(outputs['explain'], indent=4, separators=(',', ': '), ensure_ascii=False)
         node.append(explain_elm)
 
 def log_solve(system='undefined', level='info'):

@@ -8,6 +8,8 @@ import Levenshtein
 import requests
 import xml.etree.ElementTree as ET
 
+from collections import OrderedDict
+
 from thucc.engine.utils import log_solve
 
 def translate(srcList):
@@ -80,18 +82,28 @@ def solve_tselect(question):
     minD = 1e10
     maxi = valueList[0]
     maxD = -1e10
-    explain = '解释：'
+
+    explain = OrderedDict()
+    explain['题目ID'] = question.qid
+    explain['题型'] = '翻译选择题'
+    explain['问题'] = question.text
+    explain['选项'] = question.options
+    explain['第一步，翻译各选项'] = hypList
+
+    edit_distances = []
     
     for src, tgt, hyp, value in zip(srcList, tgtList, hypList, valueList):
         hyp = pure(hyp)
         d = Levenshtein.distance(tgt, hyp)
-        explain += f'系统对选项{value}中提供的原文“{src}”的译文为“{hyp}”，与选项中提供的译文“{tgt}”的编辑距离为{d}。'
+        edit_distances.append(f'{value}: “{src}”的译文“{hyp}”与选项中提供的译文“{tgt}”的编辑距离为{d}。')
         if d < minD:
             mini = value
             minD = d
         if d > maxD:
             maxi = value
             maxD = d
+
+    explain['第二步，计算编辑距离'] = edit_distances
             
     if '不' in question.text:
         answer = maxi
@@ -99,7 +111,8 @@ def solve_tselect(question):
     else:
         answer = mini
         attr = '小'
-    explain += f'选项{answer}的编辑距离最{attr}，故选{answer}。'
+    
+    explain['第三步，答案选择'] = f'选项{answer}的编辑距离最{attr}，故选{answer}。'
     
     outputs = {
         'ans': answer,

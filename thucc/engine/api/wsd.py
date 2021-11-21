@@ -2,6 +2,8 @@ import re
 import json
 import requests
 
+from collections import OrderedDict
+
 from .translate import translate
 from thucc.engine.utils import log_solve
 
@@ -113,5 +115,25 @@ def solve_wsd(question):
 
     outputs = wsd_translate_align(test_insts, ask_correct, baihuas, qtype)
     outputs['ans'] = values[outputs['ans']]
+
+    explain = OrderedDict()
+    explain['题目ID'] = question.qid
+    explain['题型'] = '词义消歧题'
+    explain['问题'] = question.text
+    explain['选项'] = question.options
+
+    explain['第一步，翻译各选项'] = baihuas
+
+    align_results = []
+
+    for test_inst, option_result in zip(test_insts, outputs['explain'].split('\n')):
+        pointed_word = test_inst[0][test_inst[1]]
+        _, aligned_desc, option_desc, score = option_result.split('\t')
+        score = float(score)
+        align_results.append(f'加点字“{pointed_word}”对齐得到的释义为“{aligned_desc}”，与选项中释义“{option_desc}”的对比得分为{score:.3f}')
+
+    explain['第二步，对齐并计算得分'] = align_results
+    explain['第三步，答案选择'] = f'根据各选项得分，选{outputs["ans"]}。'
+    outputs['explain'] = explain
     
     return outputs

@@ -111,7 +111,16 @@ def main(args):
         for q in tq_mapping[qtype]:
             output = question_api_mapping[qtype](q)
     
+    all_answers = ""
+    for k, questions in tq_mapping.items():
+        for q in questions:
+            all_answers += f"Question:\t{q.qid} [{k}]\n"
+            all_answers += f"Answer:\t{q.answer}\n\n"
+            if q.explain:
+                all_answers += f"Explain:\t{q.explain}\n\n"
+
     if args.debug:
+        print(all_answers)
         import ipdb; ipdb.set_trace()
         exit(0)
     # save answers to the output xml file
@@ -120,13 +129,6 @@ def main(args):
 
     # save answers in more readable format
     if args.output and args.simple:
-        all_answers = ""
-        for k, questions in tq_mapping.items():
-            for q in questions:
-                all_answers += f"Question:\t{q.qid} [{k}]\n"
-                all_answers += f"Answer:\t{q.answer}\n\n"
-                if q.explain:
-                    all_answers += f"Explain:\t{q.explain}\n\n"
         print("========= THUCC Results ========\n")
         print(all_answers)
         with open(args.output.replace('.xml', '.txt'), 'w') as fout:
