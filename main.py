@@ -15,7 +15,8 @@ from thucc.engine.api import (
     solve_dictation,
 
     solve_dictation_v1,
-    solve_poem_shortanswer_with_appreciation
+    solve_poem_shortanswer_with_appreciation,
+    solve_poem_shortanswer
 )
 
 # 一期系统
@@ -43,7 +44,7 @@ question_api_mapping_v2 = {'wsd': solve_wsd,                                    
                            'analects': solve_analects_with_microwrite,                   # 题型：论语（12）
                            
                            'poem_uselect': empty_solve('B'),                             # 题型：诗歌理解性选择 (13, 14)
-                           'poem_shortanswer': solve_poem_shortanswer_with_microwrite,   # 题型：诗歌简答 (15)
+                           'poem_shortanswer': solve_poem_shortanswer,                   # 题型：诗歌简答 (15)
                            'dictation': solve_dictation,                                 # 题型：默写 (16)
                            'whole_book_reading': solve_wholebookreading_with_microwrite, # 题型：整本书阅读（17）
                            

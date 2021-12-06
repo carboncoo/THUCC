@@ -14,6 +14,7 @@ from .poem_retrieval import (
     solve_dictation_v1
 )
 from .poem_appreciation import solve_poem_shortanswer_with_appreciation
+from .poem_answer import solve_poem_shortanswer
 
 from .translate import translate as api_translate
 from .microwrite import microwrite as api_microwrite
