@@ -93,7 +93,6 @@ def solve_wsd(question):
             sent = clearmark(sent).strip()
             test_insts.append([sent, pos, sense])
         baihuas = translate([test_inst[0] for test_inst in test_insts])
-        # baihuas = ['，龚遂接受了，登记清楚后拿回来', '太祖掌管禁卫亲军', '副帅潘美预先祝贺他', '又赐给他白金万两']
     elif qtype == 'sentence_pair':
         test_insts = []
         for option in options:
@@ -102,7 +101,6 @@ def solve_wsd(question):
             sent_a, sent_b = clearmark(sent_a).strip(), clearmark(sent_b).strip()
             test_insts += [[sent_a, pos_a], [sent_b, pos_b]]
         baihuas = translate([test_inst[0] for test_inst in test_insts])
-        # baihuas = ['把许多玩具放在席子上', '吴越人用小船追来送他', '看他拿什么东西', '一无所受', '你为什么会疏远我', '我有什么功劳呢', '唐彬的统帅军队的', '上前去，哭的很悲痛']
     elif qtype == 'compare':
         test_insts = []
         for option in options:
@@ -111,9 +109,10 @@ def solve_wsd(question):
             sent = clearmark(sent).strip()
             test_insts += [[sent, pos]]
         baihuas = translate([test_inst[0] for test_inst in test_insts])
-        # baihuas = ['把许多玩具放在席子上', '吴越人用小船追来送他', '看他拿什么东西', '一无所受', '你为什么会疏远我', '我有什么功劳呢', '唐彬的统帅军队的', '上前去，哭的很悲痛']
+
 
     outputs = wsd_translate_align(test_insts, ask_correct, baihuas, qtype)
+
     outputs['ans'] = values[outputs['ans']]
 
     explain = OrderedDict()
@@ -126,11 +125,18 @@ def solve_wsd(question):
 
     align_results = []
 
-    for test_inst, option_result in zip(test_insts, outputs['explain'].split('\n')):
-        pointed_word = test_inst[0][test_inst[1]]
-        _, aligned_desc, option_desc, score = option_result.split('\t')
-        score = float(score)
-        align_results.append(f'加点字“{pointed_word}”对齐得到的释义为“{aligned_desc}”，与选项中释义“{option_desc}”的对比得分为{score:.3f}')
+    if qtype == 'taggingjudge':
+        for test_inst, option_result in zip(test_insts, outputs['explain'].strip().split('\n')):
+            pointed_word = test_inst[0][test_inst[1]]
+            _, aligned_desc, option_desc, score = option_result.split('\t')
+            score = float(score)
+            align_results.append(f'加点字“{pointed_word}”对齐得到的释义为“{aligned_desc}”，与选项中释义“{option_desc}”的对比得分为{score:.3f}')
+    elif qtype == 'sentence_pair':
+        for idx, option_result in enumerate(outputs['explain'].strip().split('\n')):
+            pointed_word_a, pointed_word_b = test_insts[idx*2][0][test_insts[idx*2][1]], test_insts[idx*2+1][0][test_insts[idx*2+1][1]]
+            baihua_a, desc_a, baihua_b, desc_b, score = option_result.split('. ')[1].split('\t')
+            score = float(score)
+            align_results.append(f'第一句中加点字“{pointed_word_a}”的释义为“{desc_a}”，第一句中加点字“{pointed_word_b}”的释义为“{desc_b}”, 两者对比得分为{score:.3f}')
 
     explain['第二步，对齐并计算得分'] = align_results
     explain['第三步，答案选择'] = f'根据各选项得分，选{outputs["ans"]}。'

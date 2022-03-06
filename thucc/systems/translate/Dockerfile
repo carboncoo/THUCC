@@ -5,9 +5,7 @@ ENV PIP_SOURCE "https://mirrors.aliyun.com/pypi/simple"
 
 WORKDIR /app
 
-RUN pip install -i ${PIP_SOURCE} flask
-RUN pip install -i ${PIP_SOURCE} gunicorn
-RUN pip install -i ${PIP_SOURCE} gevent
+RUN pip install -i ${PIP_SOURCE} flask gunicorn gevent
 
 # COPY ./requirements.txt ./
 # RUN pip install -i ${PIP_SOURCE} requirements.txt

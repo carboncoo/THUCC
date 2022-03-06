@@ -17,7 +17,6 @@ def microwrite(prompts):
             "“君子坦荡荡”“淡泊名利”是..."
         ]
     """
-    print(prompts)
     single_flag = False
     if not isinstance(prompts, list):
         prompts = [prompts]
@@ -59,7 +58,7 @@ def solve_microwrite(question):
     prompts = [context + "@@" for context in contexts]
     res = microwrite(prompts)
     outputs = {
-        'ans': res
+        'ans': '\n'.join(res)
     }
     return outputs
 

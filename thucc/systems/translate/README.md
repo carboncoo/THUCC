@@ -9,7 +9,7 @@
 ```sh
 cd translate
 docker build  -t thucc-translate:v0.0.1 .
-docker run -d -p 36789:36789 --name thucc-translate thucc-translate:v0.0.1
+p
 ```
 
 ## 调用

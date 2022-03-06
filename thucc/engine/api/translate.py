@@ -53,7 +53,7 @@ def pure(s):
 @log_solve('translate')
 def solve_translate(question):
     q_str = question.to_string()
-    if re.search(q_str, "解释.*(字面意思|含义)") is not None:
+    if re.search("解释.*(字面意思|含义)", q_str) is not None:
         t_str = re.search("“(.+)”", q_str).groups()[-1]
     else:
         t_str = question.node.find('text').text
