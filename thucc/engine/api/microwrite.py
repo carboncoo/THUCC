@@ -54,20 +54,38 @@ def solve_microwrite(question):
     #     context = re.sub(label_pattern, f'（{cnt}）\\1', context, 1)
     # context = re.sub(ord_pattern, lambda x: "（{}）".format(ord(x.group(0))-9311), context)
 
+    def _choose(prompts):
+        priority = []
+        for p in prompts:
+            if re.search(r'20\d\d', p) or re.search(r'\d\d年', p):
+                q = 0
+            else:
+                q = 1
+            priority.append(q)
+        #print(priority)
+        current_prompt = ''
+        max_priority = -1
+        for p, q in zip(prompts, priority):
+            if q > max_priority:
+                current_prompt = p
+                max_priority = q
+        return current_prompt
+
     contexts = re.findall(label_pattern, question.text)
     prompts = [context + "@@" for context in contexts]
-    res = microwrite(prompts)
+
+    res = microwrite([_choose(prompts)])[0]
     outputs = {
-        'ans': '\n'.join(res)
+        'ans': res
     }
     return outputs
 
 @log_solve('microwrite')
 def solve_wholebookreading_with_microwrite(question):
     prompts = [pure(question.text) + "@@"]
-    res = microwrite(prompts)
+    res = microwrite(prompts)[0]
     outputs = {
-        'ans': res[0]
+        'ans': res
     }
     return outputs
 
@@ -81,9 +99,9 @@ def solve_poem_shortanswer_with_microwrite(question):
     prompts = [
         f"{title}@@{writer}@@{poem}@@{qstem}@@"
     ]
-    res = microwrite(prompts)
+    res = microwrite(prompts)[0]
     outputs = {
-        'ans': res[0]
+        'ans': res
     }
     return outputs
 
@@ -94,9 +112,9 @@ def solve_cc_shortanswer_with_microwrite(question):
     prompts = [
         f"{context}@@{qstem}@@"
     ]
-    res = microwrite(prompts)
+    res = microwrite(prompts)[0]
     outputs = {
-        'ans': res[0]
+        'ans': res
     }
     return outputs
 
@@ -107,9 +125,9 @@ def solve_analects_with_microwrite(question):
     prompts = [
         f"{context}@@{qstem}@@"
     ]
-    res = microwrite(prompts)
+    res = microwrite(prompts)[0]
     outputs = {
-        'ans': res[0]
+        'ans': res
     }
     return outputs
 
