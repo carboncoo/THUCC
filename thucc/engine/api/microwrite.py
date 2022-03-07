@@ -58,7 +58,11 @@ def solve_microwrite(question):
         priority = []
         for p in prompts:
             if re.search(r'20\d\d', p) or re.search(r'\d\d年', p):
+                # 时间太新的事情
                 q = 0
+            elif re.search(r'《', p):
+                # 推荐书籍相关
+                q = 2
             else:
                 q = 1
             priority.append(q)

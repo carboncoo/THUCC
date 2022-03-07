@@ -17,7 +17,9 @@ from thucc.engine.api import (
     solve_dictation_v1,
     solve_poem_shortanswer_with_appreciation,
     solve_poem_shortanswer,
-    solve_poem_uselect
+    solve_poem_uselect,
+
+    solve_cc_shortanswer
 )
 
 # 一期系统
@@ -43,6 +45,22 @@ question_api_mapping_v2 = {'wsd': solve_wsd,                                    
                            'translate': solve_translate,                                 # 题型：翻译 (10)
                            'cc_shortanswer': solve_cc_shortanswer_with_microwrite,       # 题型：文言文简答（11）
                            'analects': solve_analects_with_microwrite,                   # 题型：论语（12）
+                           
+                           'poem_uselect': solve_poem_uselect,                           # 题型：诗歌理解性选择 (13, 14)
+                           'poem_shortanswer': solve_poem_shortanswer,                   # 题型：诗歌简答 (15)
+                           'dictation': solve_dictation,                                 # 题型：默写 (16)
+                           'whole_book_reading': solve_wholebookreading_with_microwrite, # 题型：整本书阅读（17）
+                           
+                           'microwrite': solve_microwrite                                # 题型：微写作（23）
+                           }
+
+# 二期系统（20220307）
+question_api_mapping_dev = {'wsd': solve_wsd,                                            # 题型：词义消歧 (6, 7)
+                           'cc_tselect': solve_tselect,                                  # 题型：翻译选择 (8)
+                           'cc_uselect': empty_solve('C'),                               # 题型：文言文理解性选择 (9)
+                           'translate': solve_translate,                                 # 题型：翻译 (10)
+                           'cc_shortanswer': solve_cc_shortanswer,                       # 题型：文言文简答（11）
+                           'analects': solve_cc_shortanswer,                             # 题型：论语（12）
                            
                            'poem_uselect': solve_poem_uselect,                           # 题型：诗歌理解性选择 (13, 14)
                            'poem_shortanswer': solve_poem_shortanswer,                   # 题型：诗歌简答 (15)
@@ -90,7 +108,7 @@ def parse_args():
     parser.add_argument(
         "--stage",
         type=str,
-        choices=['first', 'second'],
+        choices=['first', 'second', 'dev'],
         default='second',
         help="development stage",
     )
@@ -102,8 +120,10 @@ def main(args):
     # 设置一期/二期系统作答
     if args.stage == 'first':
         question_api_mapping = question_api_mapping_v1
-    else:
+    elif args.stage == 'second':
         question_api_mapping = question_api_mapping_v2
+    else:
+        question_api_mapping = question_api_mapping_dev
 
     print("========= THUCC Start ========\n")
 

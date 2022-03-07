@@ -16,6 +16,7 @@ from .poem_retrieval import (
 from .poem_appreciation import solve_poem_shortanswer_with_appreciation
 from .poem_answer import solve_poem_shortanswer
 from .poem_uselect import solve_poem_uselect
+from .cc_answer import solve_cc_shortanswer
 
 from .translate import translate as api_translate
 from .microwrite import microwrite as api_microwrite

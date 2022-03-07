@@ -19,7 +19,7 @@ class Question(object):
         self._options = []
         if self._node.attrib["type"] == "select":
             for op in self._node.findall('select/option'):
-                self._options.append((op.attrib["value"], op.text))
+                self._options.append((op.attrib["value"], op.text.strip()))
         else:
             self._options = None
 
