@@ -11,4 +11,3 @@ sudo docker save thucc-poemretrieval:v0.0.1 > thucc-poemretrieval:v0.0.1.tar
 
 mkdir thucc-systems-docker
 mv *.tar thucc-systems-docker
-tar -czvf thucc-systems-docker.tar.gz thucc-systems-docker 
