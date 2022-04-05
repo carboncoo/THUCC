@@ -121,8 +121,8 @@ def main(args):
     if args.stage == 'first':
         question_api_mapping = question_api_mapping_v1
     elif args.stage == 'second':
-        question_api_mapping = question_api_mapping_v2
-    else:
+    #     question_api_mapping = question_api_mapping_v2
+    # else:
         question_api_mapping = question_api_mapping_dev
 
     print("========= THUCC Start ========\n")

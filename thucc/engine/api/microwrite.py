@@ -43,21 +43,11 @@ def pure(s, only_chinese=True):
 
 @log_solve('microwrite')
 def solve_microwrite(question):
-    # context = pure(question.text)
-    # prompts = [context + "@@"]
     
-    # context = pure(question.text, only_chinese=False)
-    # cnt = 0
-    # replace special tokens
-    # while re.search(label_pattern, context):
-    #     cnt += 1 
-    #     context = re.sub(label_pattern, f'（{cnt}）\\1', context, 1)
-    # context = re.sub(ord_pattern, lambda x: "（{}）".format(ord(x.group(0))-9311), context)
-
     def _choose(prompts):
         priority = []
         for p in prompts:
-            if re.search(r'20\d\d', p) or re.search(r'\d\d年', p):
+            if re.search(r'201\d', p) or re.search(r'\d\d年', p):
                 # 时间太新的事情
                 q = 0
             elif re.search(r'《', p):
