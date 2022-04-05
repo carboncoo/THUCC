@@ -9,6 +9,7 @@ __pycache__/
 thucc/systems/*/*
 !thucc/systems/poem_appreciation/*
 tests/
+thucc-systems-docker/
 
 !Dockerfile
 !README.md
