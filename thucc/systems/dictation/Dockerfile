@@ -1,4 +1,4 @@
-FROM huggingface/transformers-pytorch-gpu
+FROM huggingface/transformers-pytorch-cpu
 LABEL maintainer="thumt<thumt17@gmail.com>"
 # 清华源
 ENV PIP_SOURCE "https://mirrors.aliyun.com/pypi/simple"

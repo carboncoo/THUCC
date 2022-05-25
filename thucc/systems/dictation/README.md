@@ -6,11 +6,17 @@
 
 ## 部署
 
-```sh
+<!-- ```sh
 cd dictation
 docker build  -t thucc-dictation:v0.0.1 .
 docker run -d --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=8 -p 36794:80 --name thucc-dictation thucc-dictation:v0.0.1
-```
+``` -->
+
+<!-- ```sh
+cd dictation
+docker build  -t thucc-dictation:v0.0.2 .
+docker run -d -p 36794:80 --name thucc-dictation thucc-dictation:v0.0.2
+``` -->
 
 ## 调用
 

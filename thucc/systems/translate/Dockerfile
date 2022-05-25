@@ -5,11 +5,11 @@ ENV PIP_SOURCE "https://mirrors.aliyun.com/pypi/simple"
 
 WORKDIR /app
 
-RUN pip install -i ${PIP_SOURCE} flask gunicorn gevent
+RUN pip install -i ${PIP_SOURCE} fastapi uvicorn
 
 # COPY ./requirements.txt ./
 # RUN pip install -i ${PIP_SOURCE} requirements.txt
 COPY ./src .
-EXPOSE 36789
+EXPOSE 80
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:36789", "--timeout", "0", "wsgi:app"]
+CMD ["uvicorn", "wsgi:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4", "--reload"]

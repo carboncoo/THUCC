@@ -37,8 +37,8 @@ def translate(srcList):
         srcList = [srcList]
         single_flag = True
     url = "http://127.0.0.1:36789/translate/"
-    ret = requests.post(url, json=srcList)
-    tgtList = json.loads(ret.text)
+    ret = requests.post(url, json={'srcList': srcList})
+    tgtList = eval(json.loads(ret.text))
     if single_flag:
         tgtList = tgtList[0]
     return tgtList
