@@ -5,7 +5,7 @@ ENV PIP_SOURCE "https://mirrors.aliyun.com/pypi/simple"
 
 WORKDIR /app
 
-RUN pip3 install -i ${PIP_SOURCE} fastapi uvicorn sentencepiece Levenshtein
+RUN pip3 install -i ${PIP_SOURCE} fastapi uvicorn==0.16.0 sentencepiece Levenshtein
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 # COPY ./requirements.txt ./

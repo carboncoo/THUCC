@@ -8,7 +8,7 @@ from multipage import MultiPage
 from pages import (
     dictation,
     mircrowrite,
-    wsd
+    translate
 )
 
 # Create an instance of the app 
@@ -25,7 +25,7 @@ headbar.markdown(f'#### THUCC: 清华大学文言文自动处理软件包 <img s
 # Add all your application here
 app.add_page("古诗文默写", dictation.app)
 app.add_page("微写作", mircrowrite.app)
-app.add_page("词义消歧", wsd.app)
+app.add_page("文言文翻译", translate.app)
 # app.add_page("文言翻译", translate.app)
 
 # The main app

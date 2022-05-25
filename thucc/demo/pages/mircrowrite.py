@@ -10,19 +10,19 @@ def app():
 
     with st.container():
         # 综合性微写作
-        init_inputs_general = "班级要举行一次读书交流活动，请你在此次活动上向大家推介一本你最喜欢的书。要求：语言简明，条理清楚。"
-        init_outputs_general = "《老人与海》这本书讲述了一个人出海的经过和最终取得胜利的故事，我非常推荐大家去阅读它。书中的圣地亚哥是一位硬汉形象，面对大马林鱼时他没有丝毫退缩，而是勇敢地与其搏斗。最后也取得了巨大的收获，我们也应该像这位英雄一样不屈服于现实。 "
+        init_inputs_general = "在你阅读的文学名著中，总会有一个鼓舞你成长的“引路人”。请从《红岩》《平凡的世界》中选取一个这样的人物，写一段抒情文字或一首小诗，表达你对他（她）的崇敬之情。要求：感情真挚，富有文采150字左右。"
+        init_outputs_general = "江姐，你是我心中的英雄！你的勇敢、坚贞和无私奉献的精神永远在我心中荡漾；你在面对丈夫牺牲时的痛苦与不甘也时刻在我的脑海中浮现……是你教会了我什么叫钢铁般的意志，让我在今后的人生道路不会迷茫。在你身上，我学到了什么是坚强，是对你那不屈精神的追求。你对党的忠诚令我敬佩无比，为了革命的胜利，即使被敌人残忍杀害也不后悔。你是那么的伟大而无私，无论遇到多大困难，都坚定地站了起来，毫不动摇，坚持到最后一刻。你是我心目中的英雄！"
 
         # st.write("## 自由写作")
         st.write("### 系统输入")
         inputs_general = st.text_area("", init_inputs_general)
         display_general = init_outputs_general
         if st.button('提交', key='general'):
-            display_general = inputs_general + api_microwrite(inputs_general)
+            display_general = api_microwrite(prompt_wbr(inputs_general))
             if not display_general:
                 display_general = '出现故障'
 
-        st.write("### 系统输出")
+        st.write("### 作答结果")
         
         st.write(display_general)
 

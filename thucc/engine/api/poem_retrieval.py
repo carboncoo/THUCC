@@ -38,7 +38,7 @@ def pure(s):
     s = s.replace('\n','')
     s = s.replace(' ','')
     s = s.replace('\r','')
-    s = re.sub(r'_+', '_______', s)
+    s = re.sub(r'_+', '________', s)
     return s
 
 def solve_dictation_with_dictation(question):

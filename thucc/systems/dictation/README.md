@@ -14,8 +14,8 @@ docker run -d --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=8 -p 36794:80 --name th
 
 <!-- ```sh
 cd dictation
-docker build  -t thucc-dictation:v0.0.2 .
-docker run -d -p 36794:80 --name thucc-dictation thucc-dictation:v0.0.2
+docker build  -t thucc-dictation:v0.0.1 .
+c
 ``` -->
 
 ## 调用

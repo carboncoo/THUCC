@@ -24,18 +24,18 @@ may_restart_docker(){
             sudo docker rm $docker_name
             echo "stopped docker $docker_name exists, remove it"
         fi
-        sudo docker run -d -p $port:80 --name $docker_name $image_name
+        sudo docker run -d -p $port:80 --restart=always --name $docker_name $image_name
     fi
 }
 
 may_restart_docker thucc-ccanswer thucc-ccanswer:v0.0.1 36800
-# may_restart_docker thucc-dictation thucc-dictation:v0.0.2 36794
-# may_restart_docker thucc-microwrite thucc-microwrite:v0.0.1 36790
-# may_restart_docker thucc-poemanswer thucc-poemanswer:v0.0.1 36795
-may_restart_docker thucc-dictation thucc-dictation:v0.0.1 36793
-# may_restart_docker thucc-poemuselect thucc-poemuselect:v0.0.1 36796
-# may_restart_docker thucc-translate thucc-translate:v0.0.1 36789
-# may_restart_docker thucc-wsd thucc-wsd:v0.0.1 36792
+may_restart_docker thucc-dictation thucc-dictation:v0.0.1 36794
+may_restart_docker thucc-microwrite thucc-microwrite:v0.0.1 36790
+may_restart_docker thucc-poemanswer thucc-poemanswer:v0.0.1 36795
+may_restart_docker thucc-poemretrieval thucc-poemretrieval:v0.0.1 36793
+may_restart_docker thucc-poemuselect thucc-poemuselect:v0.0.1 36796
+may_restart_docker thucc-translate thucc-translate:v0.0.1 36789
+may_restart_docker thucc-wsd thucc-wsd:v0.0.1 36792
 
 
 # sudo docker run -d -p 36794:80 --name thucc-ccanswer thucc-ccanswer:v0.0.1
